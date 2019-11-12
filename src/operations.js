@@ -1,14 +1,17 @@
+import { Storage, DataSchema, Data } from 'main'
+
+
 const operations = {
   db: {
-    init: (content) => {
-      const db = Storage.init(new Uint8Array(content));
+    init: async (content) => {
+      const db = await Storage.init(new Uint8Array(content));
       const storage = Storage.provider(db);
       return storage.isEmpty() ? storage.initSchemas(_.values(DataSchema)) : db;
     },
   },
   scope: {
     isCurrent: (db, scope) => {
-      return !_.isEmpty(scope.uuid) \&\& operations.scope.getLast(db).uuid === scope.uuid;
+      return !_.isEmpty(scope.uuid) && operations.scope.getLast(db).uuid === scope.uuid;
     },
     create: (db, params = {}) => {
       return Storage.provider(db).schema(DataSchema.Scope).insert(Data.entity(DataSchema.Scope, params));
@@ -63,3 +66,5 @@ const operations = {
     only: (statusName) => (task) => task.status === DataSchema.Task.enums.statuses.indexOf(statusName),
   },
 };
+
+export default operations

@@ -1,9 +1,17 @@
-const dropbox = {
+import fs from 'fs'
+import initSqlJs from 'sql.js'
+import { Dropbox as DropboxLib } from 'dropbox'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
+import { fromPairs, isUndefined, pick, isEmpty, has } from 'lodash'
+
+
+const dropboxConfig = {
   accessToken: 'eKPyzL4RyRgAAAAAAACjnEYGG9IchsVABgMybC-GocXkITnngpB4DX9X8wzzsV3Y',
   dbFileName: '/recapitulation.sqlite'
 };
 
-const Dropbox = new window.Dropbox.Dropbox({ accessToken: dropbox.accessToken, fetch });
+const Dropbox = new DropboxLib({ accessToken: dropboxConfig.accessToken, fetch });
 
 const StorageInit = (schemaUtils, lodash) => {
   const escapeValue = (type, value) => {
@@ -96,7 +104,7 @@ const StorageInit = (schemaUtils, lodash) => {
     };
   };
 
-  const withProvider = (provider) => {
+  return (provider) => {
     return {
       schema: (dataSchema) => withSchema(provider, dataSchema),
       initSchemas: (schemas) => {
@@ -110,26 +118,22 @@ const StorageInit = (schemaUtils, lodash) => {
       isEmpty: () => isEmpty(provider),
     };
   };
-  return {
-    init: null,
-    provider: (provider) => withProvider(provider),
-  };
 };
 
-const uuid = () => ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]\&15 >> c/4).toString(16));
+const uuid = () => ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15 >> c/4).toString(16));
 
 const Data = {
   fields: ({ columns }) => columns.map(({ name }) => name),
-  types: ({ columns }) => _.fromPairs(columns.map(({ name, type }) => [name, type])),
+  types: ({ columns }) => fromPairs(columns.map(({ name, type }) => [name, type])),
   hollowEntity: (schema) => Data.fields(schema).reduce((result, fieldName) => {
     const defaultValue = schema.defaultValues[fieldName];
     return {
       ...result,
-      ...(_.isUndefined(defaultValue) ? {} : { [fieldName]: defaultValue() })
+      ...(isUndefined(defaultValue) ? {} : { [fieldName]: defaultValue() })
     };
   }, {}),
   entity: (schema, props) => {
-    return Object.assign({}, Data.hollowEntity(schema), _.pick(props, Data.fields(schema)));
+    return Object.assign({}, Data.hollowEntity(schema), pick(props, Data.fields(schema)));
   },
 };
 
@@ -167,12 +171,10 @@ const DataSchema = {
 const emptyFn = () => {};
 const dummyFn = (...args) => args;
 const isScopesEqual = (nextScope, prevScope) => {
-  const bothEmpty = _.isEmpty(nextScope) \&\& _.isEmpty(prevScope);
-  const bothHasUUID = _.has(nextScope, 'uuid') \&\& _.has(prevScope, 'uuid');
-  return (bothHasUUID \&\& nextScope.uuid == prevScope.uuid) || bothEmpty;
+  const bothEmpty = isEmpty(nextScope) && isEmpty(prevScope);
+  const bothHasUUID = has(nextScope, 'uuid') && has(prevScope, 'uuid');
+  return (bothHasUUID && nextScope.uuid == prevScope.uuid) || bothEmpty;
 };
-const { Provider, useDispatch, useSelector } = ReactRedux;
-const { useState, useEffect, useMemo } = React;
 
 const useDispatchAction = (actionFn, { args = [], deps = null } = {}) => {
   const dispatch = useDispatch();
@@ -192,8 +194,24 @@ const formatScopeDate = (date) => {
   return [dateStr, timeStr].join(' ');
 };
 
+const Storage = {
+  init: async (databaseContent) => {
+    const sql = await initSqlJs()
+    return new sql.Database(databaseContent)
+  },
+  provider: StorageInit(Data, _)
+};
 
-const Storage = StorageInit(Data, _);
-initSqlJs().then((sql) => {
-  Storage.init = (databaseContent) => new sql.Database(databaseContent);
-});
+export {
+  Dropbox,
+  dropboxConfig,
+  uuid,
+  Data,
+  DataSchema,
+  emptyFn,
+  dummyFn,
+  isScopesEqual,
+  useDispatchAction,
+  formatScopeDate,
+  Storage
+}

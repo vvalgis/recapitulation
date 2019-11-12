@@ -1,3 +1,7 @@
+import operations from 'operations'
+import { Dropbox, dropboxConfig } from 'main'
+
+
 const events = [
   'errorReceived',
   'dbFileRecieved',
@@ -16,21 +20,27 @@ const actions = {
     loadFile: () => (dispatch) => {
       const onSuccess = (response) => {
         new Response(response.fileBlob).arrayBuffer().then((dbFileContent) => {
-          localStorage.setItem('dbFileContent', dbFileContent); /* db cache */
-          const db = operations.db.init(dbFileContent);
           dispatch(events.dbFileRecieved(response));
-          dispatch(events.dbFileSynced(db));
-        });
-      };
+          operations.db.init(dbFileContent).then((db) => {
+            // localStorage.setItem('dbFileContent', dbFileContent); /* put db to cache */
+            dispatch(events.dbFileSynced(db))
+          })
+        })
+      }
       const onError = (response) => {
         dispatch(events.errorReceived(response));
-        dispatch(actions.db.syncFile(operations.db.init([])));
+        operations.db.init([]).then((db) => {
+          // dispatch(actions.db.syncFile(db))
+        })
       };
-      const content = localStorage.getItem('dbFileContent'); /* db cache */
-      if (_.isEmpty(content)) {
-        dispatch(events.dbFileSynced(operations.db.init(content))); /* db cache */
+      // const content = localStorage.getItem('dbFileContent'); /* get db from cache */
+      const content = null
+      if (!_.isEmpty(content)) { /* init db from cache */
+        operations.db.init(content).then((db) => {
+          dispatch(events.dbFileSynced(db))
+        })
       } else {
-        return Dropbox.filesDownload({path: dropbox.dbFileName}).then(onSuccess, onError);
+        return Dropbox.filesDownload({path: dropboxConfig.dbFileName}).then(onSuccess, onError);
       }
     },
     syncFile: (db) => (dispatch) => {
@@ -38,12 +48,12 @@ const actions = {
       const onSuccess = (response) => {
         dispatch(events.dbFileRecieved(response));
         dispatch(events.dbFileSynced(db));
-        localStorage.removeItem('dbFileContent'); /* db cache */
+        // localStorage.removeItem('dbFileContent'); /* db cache */
       };
       const onError = (response, dispatch) => {
         dispatch(events.errorReceived(response));
       };
-      const args = { contents: dbFileContent, path: dropbox.dbFileName, mode: 'overwrite' };
+      const args = { contents: dbFileContent, path: dropboxConfig.dbFileName, mode: 'overwrite' };
       return Dropbox.filesUpload(args).then(onSuccess, onError);
     },
   },
@@ -100,3 +110,8 @@ const actions = {
     },
   },
 };
+
+export {
+  events,
+  actions
+}

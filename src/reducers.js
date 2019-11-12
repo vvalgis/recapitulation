@@ -9,6 +9,7 @@ const initialState = {
 };
 
 const mappingEventToStoreCompartment = {
+  errorReceived: 'currentError',
   dbFileRecieved: 'dbFileMetaData',
   dbFileSynced: 'db',
   scopeRecieved: 'currentScope',
@@ -43,3 +44,9 @@ const rootReducer = (reducers) => (state = initialState, action) => {
     return state;
   }
 };
+
+export {
+  reducers,
+  getFromCompartment,
+  rootReducer
+}

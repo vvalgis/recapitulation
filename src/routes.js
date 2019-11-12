@@ -1,9 +1,12 @@
+import React, { createContext, useContext, useState, useMemo } from 'react'
+import { ScopeScreen, SettingsScreen } from 'screens'
+
 const routes = [
   { path: '', component: ScopeScreen },
   { path: 'settings', component: SettingsScreen }
 ];
 
-const Routing = React.createContext([{}, () => {}]);
+const Routing = createContext([{}, () => {}]);
 
 const Router = ({ children }) => {
   const [ hash, setHash ] = useState(window.location.hash);
@@ -18,7 +21,7 @@ const Router = ({ children }) => {
 };
 
 const useRouter = () => {
-  const [ hash, setHash ] = React.useContext(Routing);
+  const [ hash, setHash ] = useContext(Routing);
   const route = useMemo(() => routes.find(({ path }) => path === hash), [hash]);
   return {
     currentComponent: route.component,
@@ -31,4 +34,8 @@ const Link = ({ to, children }) => {
   return <a className="route-link" onClick={ () => navigate(to) }>{ children }</a>
 };
 
-
+export {
+  Router,
+  useRouter,
+  Link
+}
