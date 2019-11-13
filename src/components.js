@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { Fragment, useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useDispatchAction, formatScopeDate, DataSchema } from 'main'
 import { useRouter, Link } from 'routes'
 import { actions } from 'actions'
 import { getFromCompartment } from 'reducers'
+import { save as saveSetting } from 'config'
 
 const Screen = ({ className, children }) => {
   return <section className={ `screen ${className}` }>{ children }</section>;
@@ -160,10 +161,10 @@ const TaskForm = ({ task = { note: '' }, onSubmit }) => {
     onSubmit(note);
   };
   return (
-    <React.Fragment>
+    <Fragment>
       <input value={ note } onChange={ noteHandler } onKeyDown={ handleEnter } />
       <Button name="add" onClick={ handleSubmit }><Icon name="add" /></Button>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
@@ -177,6 +178,14 @@ const NewTaskForm = ({ scope, onSubmit }) => {
   };
   return onEdit ? <TaskForm onSubmit={ submitNewTask } /> : <Button name="add" title="Add Task" onClick={ showForm }><Icon name="add" /></Button>;
 };
+
+const ScreenTitle = ({ children }) => {
+  return (
+    <header>
+      <h1>{ children }</h1>
+    </header>
+  )
+}
 
 const ScopeTitle = ({ scope, isActive = false }) => {
   const formattedDate = useMemo(() => formatScopeDate(scope.created_at), [scope.created_at]);
@@ -193,7 +202,7 @@ const ScopeTitle = ({ scope, isActive = false }) => {
 
 const ActiveScope = ({ scope, tasks }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <nav>
         <SyncButton />
         <SettingsButton />
@@ -201,18 +210,18 @@ const ActiveScope = ({ scope, tasks }) => {
       <ScopeTitle scope={ scope } isActive />
       <Tasks tasks={ tasks } />
       <footer><NewTaskForm scope={ scope } /></footer>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 const ArchiveScope = ({ scope, tasks }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <nav><SettingsButton /></nav>
       <ScopeTitle scope={ scope } />
       <Tasks tasks={ tasks } isArchivedScope />
       <footer></footer>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
@@ -222,14 +231,42 @@ const Scope = ({ scope, ScopeComponent }) => {
   return <ScopeComponent { ...{ scope, tasks } } />;
 };
 
-const Settings = () => {
+const SettingForm = ({ setting = { name: '', title: '', value: '' }, onSave }) => {
+  const [value, setValue] = useState(setting.value)
+  const valueHandler = (event) => {
+    setValue(event.target.value)
+  }
+  const handleEnter = ({ key }) => {
+    if (key === 'Enter') {
+      handleSubmit()
+    }
+  }
+  const handleSubmit = (event) => {
+    onSave({ ...setting, value })
+  }
   return (
-    <React.Fragment>
+    <Fragment>
+      <dt>{ setting.title }</dt>
+      <dd>
+        <input value={ value } onChange={ valueHandler } onKeyDown={ handleEnter } />
+        <Button name="done" onClick={ handleSubmit }><Icon name="done" /></Button>
+      </dd>
+    </Fragment>
+  )
+}
+
+const Settings = ({ settings }) => {
+  return (
+    <Fragment>
       <nav>
         <BackButton />
       </nav>
-    </React.Fragment>
-  );
+      <ScreenTitle>Settings</ScreenTitle>
+      <dl className="settings">
+        { settings.map((setting) => <SettingForm { ...{ setting, onSave: saveSetting, key: setting.name } } />) }
+      </dl>
+    </Fragment>
+  )
 }
 
 export {

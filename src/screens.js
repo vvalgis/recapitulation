@@ -5,6 +5,7 @@ import { useRouter } from 'routes'
 import { actions } from 'actions'
 import { getFromCompartment } from 'reducers'
 import { Screen, Scope, Icon, ActiveScope, ArchiveScope, Settings } from 'components'
+import { list as getSettingsList } from 'config'
 
 const LoadingScreen = () => <Screen className="loading"><Icon name="loading" /></Screen>;
 
@@ -35,7 +36,7 @@ const ScopeScreen = () => {
 const SettingsScreen = () => {
   return (
     <Screen className="settings">
-      <Settings />
+      <Settings settings={ getSettingsList() } />
     </Screen>
   );
 };

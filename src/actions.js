@@ -1,7 +1,6 @@
 import operations from 'operations'
 import { Dropbox, dropboxConfig } from 'main'
 
-
 const events = [
   'errorReceived',
   'dbFileRecieved',
