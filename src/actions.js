@@ -1,5 +1,6 @@
 import operations from 'operations'
-import { Dropbox, dropboxConfig } from 'main'
+import { Dropbox } from 'main'
+import { get as getConfigParam } from 'config'
 
 const events = [
   'errorReceived',
@@ -39,7 +40,7 @@ const actions = {
           dispatch(events.dbFileSynced(db))
         })
       } else {
-        return Dropbox.filesDownload({path: dropboxConfig.dbFileName}).then(onSuccess, onError);
+        return Dropbox.filesDownload({path: getConfigParam('recapitulationDropboxDbFileName')}).then(onSuccess, onError);
       }
     },
     syncFile: (db) => (dispatch) => {
@@ -52,7 +53,7 @@ const actions = {
       const onError = (response, dispatch) => {
         dispatch(events.errorReceived(response));
       };
-      const args = { contents: dbFileContent, path: dropboxConfig.dbFileName, mode: 'overwrite' };
+      const args = { contents: dbFileContent, path: getConfigParam('recapitulationDropboxDbFileName'), mode: 'overwrite' };
       return Dropbox.filesUpload(args).then(onSuccess, onError);
     },
   },

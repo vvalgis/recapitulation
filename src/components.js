@@ -255,13 +255,28 @@ const SettingForm = ({ setting = { name: '', title: '', value: '' }, onSave }) =
   )
 }
 
-const Settings = ({ settings }) => {
-  return (
-    <Fragment>
+
+
+const Settings = ({ settings, initialized }) => {
+  const renderNav = () => {
+    return (
       <nav>
         <BackButton />
       </nav>
+    )
+  }
+
+  const renderWelcomeText = () => {
+    return (
+      <p className="welcome-text">Please provide settings</p>
+    )
+  }
+
+  return (
+    <Fragment>
+      { initialized && renderNav() }
       <ScreenTitle>Settings</ScreenTitle>
+      { !initialized && renderWelcomeText() }
       <dl className="settings">
         { settings.map((setting) => <SettingForm { ...{ setting, onSave: saveSetting, key: setting.name } } />) }
       </dl>

@@ -4,14 +4,15 @@ import { Dropbox as DropboxLib } from 'dropbox'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { fromPairs, isUndefined, pick, isEmpty, has } from 'lodash'
+import { get as getConfigParam } from 'config'
 
 
-const dropboxConfig = {
-  accessToken: 'eKPyzL4RyRgAAAAAAACjnEYGG9IchsVABgMybC-GocXkITnngpB4DX9X8wzzsV3Y',
-  dbFileName: '/recapitulation.sqlite'
-};
+// const dropboxConfig = {
+//   accessToken: 'eKPyzL4RyRgAAAAAAACjnEYGG9IchsVABgMybC-GocXkITnngpB4DX9X8wzzsV3Y',
+//   dbFileName: '/recapitulation.sqlite'
+// };
 
-const Dropbox = new DropboxLib({ accessToken: dropboxConfig.accessToken, fetch });
+const Dropbox = new DropboxLib({ accessToken: getConfigParam('recapitulationDropboxAccessToken'), fetch });
 
 const StorageInit = (schemaUtils, lodash) => {
   const escapeValue = (type, value) => {
@@ -204,7 +205,6 @@ const Storage = {
 
 export {
   Dropbox,
-  dropboxConfig,
   uuid,
   Data,
   DataSchema,

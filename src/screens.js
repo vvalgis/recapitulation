@@ -1,11 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { isEmpty } from 'lodash'
 import { useDispatchAction, isScopesEqual } from 'main'
 import { useRouter } from 'routes'
 import { actions } from 'actions'
 import { getFromCompartment } from 'reducers'
 import { Screen, Scope, Icon, ActiveScope, ArchiveScope, Settings } from 'components'
-import { list as getSettingsList } from 'config'
+import { list as getSettingsList, isAppInitialized } from 'config'
 
 const LoadingScreen = () => <Screen className="loading"><Icon name="loading" /></Screen>;
 
@@ -14,17 +15,23 @@ const InitScopeScreen = () => {
   return <LoadingScreen />
 };
 
-const Recapitulation = () => {
+const InitDbScreen = () => {
   useDispatchAction(actions.db.loadFile, { deps: [] });
-  const { currentComponent: CurrentScreen } = useRouter();
-  const db = useSelector(getFromCompartment('db'));
-  return _.isEmpty(db) ? <LoadingScreen /> : <CurrentScreen />;
+  return <LoadingScreen />
+}
+
+const Recapitulation = () => {
+  const noDB = isEmpty(useSelector(getFromCompartment('db')))
+  const { currentComponent } = useRouter();
+  const CurrentScreen = isAppInitialized() ? currentComponent : SettingsScreen
+
+  return isAppInitialized() && noDB ? <InitDbScreen /> : <CurrentScreen />;
 };
 
 const ScopeScreen = () => {
   const scope = useSelector(getFromCompartment('currentScope'), isScopesEqual);
   const isActive = useSelector(getFromCompartment('isActiveScope'));
-  if (_.isEmpty(scope)) {
+  if (isEmpty(scope)) {
     return <InitScopeScreen />
   } else {
     const ScopeComponent = isActive ? ActiveScope : ArchiveScope;
@@ -36,7 +43,7 @@ const ScopeScreen = () => {
 const SettingsScreen = () => {
   return (
     <Screen className="settings">
-      <Settings settings={ getSettingsList() } />
+      <Settings settings={ getSettingsList() } initialized={ isAppInitialized() } />
     </Screen>
   );
 };
