@@ -18,15 +18,20 @@
 * Save Dropbox api key in localStorage
 * DB FileName page as setting maybe
 * A new user use case (set settings before use scopes)
+* Split files onto modules
+* Split components
+* Split elements
 ---
+
+* Add libs folder with "main", "routes", "store", "reducers", "signals" inside
+* Split files onto screens
 
 * Add save icon to setting page
 * Hide save button if field wasn't changed on settings page
-* Add responsive style
-* Split files onto modules
 * welcome page with description and requirements
 * animations
 
+* Add responsive style
 * Rename events by model
 * operations inside of an action is not pure. redux middleware maybe? But importing in es6 should work as well.
 * Add linter
