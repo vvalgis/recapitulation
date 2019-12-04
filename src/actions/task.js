@@ -1,5 +1,5 @@
 import { task as opTask } from 'operations'
-import signals from 'signals'
+import signals from 'libs/signals'
 
 const getByScope = ({ uuid }) => (dispatch, getState) => {
   const tasks = opTask.getByScopeId(getState().db, uuid)

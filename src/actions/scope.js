@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash'
 import { scope as opScope } from 'operations'
-import signals from 'signals'
+import signals from 'libs/signals'
 
 const init = () => (dispatch, getState) => {
   dispatch(actions.scope.switchTo(opScope.create(getState().db)))
