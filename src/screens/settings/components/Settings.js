@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { save as saveSetting } from 'config'
+import { save as saveSetting } from 'libs/config'
 import { ScreenTitle } from 'components'
 import { BackButton } from 'elements'
 import SettingForm from './SettingForm'

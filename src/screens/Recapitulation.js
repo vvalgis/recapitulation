@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { isEmpty } from 'lodash'
 import { getFromCompartment } from 'reducers'
 import { useRouter } from 'libs/router'
-import { isAppInitialized } from 'config'
+import { isAppInitialized } from 'libs/config'
 import { InitDbScreen, SettingsScreen } from 'screens'
 
 const Recapitulation = () => {

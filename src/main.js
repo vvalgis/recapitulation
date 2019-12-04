@@ -4,7 +4,7 @@ import { Dropbox as DropboxLib } from 'dropbox'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { fromPairs, isUndefined, pick, isEmpty, has } from 'lodash'
-import { get as getConfigParam } from 'config'
+import { get as getConfigParam } from 'libs/config'
 
 
 // const dropboxConfig = {

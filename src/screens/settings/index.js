@@ -1,7 +1,7 @@
 import React from 'react'
 import { Screen } from 'components'
 import { Settings } from './components'
-import { list as getSettingsList, isAppInitialized } from 'config'
+import { list as getSettingsList, isAppInitialized } from 'libs/config'
 
 const SettingsScreen = () => {
   return (

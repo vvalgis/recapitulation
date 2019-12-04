@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash'
 import { db as opDb } from 'operations'
 import { Dropbox } from 'main'
-import { get as getConfigParam } from 'config'
+import { get as getConfigParam } from 'libs/config'
 import signals from 'libs/signals'
 
 const loadFile = () => (dispatch) => {
