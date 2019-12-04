@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isEmpty } from 'lodash'
 import * as actions from 'actions'
-import { getFromCompartment } from 'reducers'
+import { getFromCompartment } from 'libs/store'
 import { Button, Icon } from 'elements'
 
 const SyncButton = () => {

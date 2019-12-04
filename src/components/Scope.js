@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatchAction } from 'main'
 import * as actions from 'actions'
-import { getFromCompartment } from 'reducers'
+import { getFromCompartment } from 'libs/store'
 
 const Scope = ({ scope, ScopeComponent }) => {
   useDispatchAction(actions.task.getByScope, { args: [scope], deps: [scope] })

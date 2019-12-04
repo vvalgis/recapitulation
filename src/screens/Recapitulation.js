@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { getFromCompartment } from 'reducers'
+import { getFromCompartment } from 'libs/store'
 import { useRouter } from 'libs/router'
 import { isAppInitialized } from 'libs/config'
 import { InitDbScreen, SettingsScreen } from 'screens'

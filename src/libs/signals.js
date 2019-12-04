@@ -9,4 +9,4 @@ export default [
   'backwardScopeRecieved',
   'forwardScopeRecieved',
   'activeScopeSet',
-].reduce((result, eventName) => ({ ...result, [eventName]: (payload) => ({ type: eventName, payload }) }), {});
+].reduce((result, eventName) => ({ ...result, [eventName]: (payload) => ({ type: eventName, payload }) }), {})

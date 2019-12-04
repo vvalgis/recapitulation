@@ -24,16 +24,18 @@
 ---
 
 * Add libs folder with "main", "routes", "store", "reducers", "signals" inside
-* Split files onto screens
+* Split files onto screens and refactor reducers
+* Add postcss and SugarSS
+* Move styles close to components
 
 * Add save icon to setting page
 * Hide save button if field wasn't changed on settings page
 * welcome page with description and requirements
 * animations
+* Maybe add normalizr
 
 * Add responsive style
 * Rename events by model
-* operations inside of an action is not pure. redux middleware maybe? But importing in es6 should work as well.
 * Add linter
 * add CI
 * add tests
