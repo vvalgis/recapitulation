@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { render } from 'react-dom'
 import { store } from 'store'
-import { Router } from 'routes'
+import Router from 'libs/router'
 import css from 'style.css'
 
 import { Recapitulation } from 'screens'

@@ -1,14 +1,13 @@
 import React from 'react'
-import { Link } from 'routes'
-import { Button, Icon } from 'elements'
+import { Switch, Button, Icon } from 'elements'
 
 const BackButton = () => {
   return (
-    <Link to="">
+    <Switch to="">
       <Button name="back" title="Back">
         <Icon name="left" />
       </Button>
-    </Link>
+    </Switch>
   );
 };
 

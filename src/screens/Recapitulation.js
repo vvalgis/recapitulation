@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { isEmpty } from 'lodash'
 import { getFromCompartment } from 'reducers'
-import { useRouter } from 'routes'
+import { useRouter } from 'libs/router'
 import { isAppInitialized } from 'config'
 import { InitDbScreen, SettingsScreen } from 'screens'
 
