@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatchAction } from 'main'
+import { useDispatchAction } from 'libs/hooks'
 import * as actions from 'actions'
 import { LoadingScreen } from 'screens'
 

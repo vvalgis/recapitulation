@@ -1,9 +1,12 @@
-import { Storage, DataSchema } from 'main'
+import { values } from 'lodash'
+import * as schemas from 'libs/storage/schemas'
+import Storage from 'libs/storage/Storage'
 
 const init = async (content) => {
-  const db = await Storage.init(new Uint8Array(content))
-  const storage = Storage.provider(db)
-  return storage.isEmpty() ? storage.initSchemas(_.values(DataSchema)) : db
+  return Storage().init(new Uint8Array(content)).then((db) => {
+    Storage(db).initSchemas(values(schemas))
+    return db
+  })
 }
 
 export {

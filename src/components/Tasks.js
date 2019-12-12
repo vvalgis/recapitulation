@@ -1,9 +1,9 @@
 import React from 'react'
-import { DataSchema } from 'main'
+import { Task as TaskSchema } from 'libs/storage/schemas'
 import { Task, ArchivedTask } from 'components'
 
 const Tasks = ({ tasks, isArchivedScope = false }) => {
-  const statusNames = DataSchema.Task.enums.statuses
+  const statusNames = TaskSchema.enums.statuses
   const ATask = isArchivedScope ? ArchivedTask : Task
   return (
     <article>

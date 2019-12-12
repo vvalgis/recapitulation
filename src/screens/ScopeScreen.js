@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { isScopesEqual } from 'main'
+import { isScopesEqual } from 'libs/utils'
 import { getFromCompartment } from 'libs/store'
 import { Screen, Scope, ActiveScope, ArchiveScope } from 'components'
 

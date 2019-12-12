@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { formatScopeDate } from 'main'
+import { formatScopeDate } from 'libs/utils'
 import { ScopeNavigateButton, RecapitulateButton } from 'elements'
 
 const ScopeTitle = ({ scope, isActive = false }) => {

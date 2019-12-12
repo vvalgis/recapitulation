@@ -21,23 +21,28 @@
 * Split files onto modules
 * Split components
 * Split elements
+* Add libs folder with "main", "routes", "store", "reducers", "signals" inside
+* Refactor "main" and move it to libs
 ---
 
-* Add libs folder with "main", "routes", "store", "reducers", "signals" inside
-* Split files onto screens and refactor reducers
 * Add postcss and SugarSS
 * Move styles close to components
-
 * Add save icon to setting page
+* Add save icon to edit form
 * Hide save button if field wasn't changed on settings page
+
 * welcome page with description and requirements
+
+* Before publishing remove change API token
+* Release (Tag)
+
+* Split files onto screens 
 * animations
-* Maybe add normalizr
 
 * Add responsive style
-* Rename events by model
+
 * Add linter
 * add CI
 * add tests
 
-* Before publishing remove change API token
+

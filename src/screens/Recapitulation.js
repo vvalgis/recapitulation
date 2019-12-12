@@ -12,6 +12,6 @@ const Recapitulation = () => {
   const CurrentScreen = isAppInitialized() ? currentComponent : SettingsScreen
 
   return isAppInitialized() && noDB ? <InitDbScreen /> : <CurrentScreen />
-};
+}
 
 export default Recapitulation

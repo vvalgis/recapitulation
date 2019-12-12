@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { useDispatchAction } from 'main'
+import { useDispatchAction } from 'libs/hooks'
 import * as actions from 'actions'
 import { getFromCompartment } from 'libs/store'
 

@@ -14,4 +14,4 @@ render(
     </Router>
   </Provider>,
   document.querySelector('#root')
-);
+)

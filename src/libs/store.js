@@ -54,7 +54,7 @@ const rootReducer = (reducers) => (state = initialState, action) => {
   return compartmentUpdaterFor(action.type, reducers)(state, action)
 }
 
-const composeEnhancers = composeWithDevTools({trace: true, traceLimit: 25}) || compose;
+const composeEnhancers = composeWithDevTools({trace: true, traceLimit: 25}) || compose
 
 const store = createStore(
   rootReducer(reducers),

@@ -8,7 +8,7 @@ const BackButton = () => {
         <Icon name="left" />
       </Button>
     </Switch>
-  );
-};
+  )
+}
 
 export default BackButton
