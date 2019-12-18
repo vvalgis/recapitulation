@@ -23,9 +23,9 @@
 * Split elements
 * Add libs folder with "main", "routes", "store", "reducers", "signals" inside
 * Refactor "main" and move it to libs
----
 
 * Add postcss and SugarSS
+---
 * Move styles close to components
 * Add save icon to setting page
 * Add save icon to edit form

@@ -1,0 +1,24 @@
+@import 'app.sss'
+@import 'breakpoints.sss'
+
+@media (--wide-screen)
+  .screen
+    width: 40rem
+
+@media (--narrow-screen)
+  .screen
+    width: 100%
+
+.screen
+  margin: 0 $unit-size-x5
+  display: flex
+  flex-flow: column nowrap
+  background-color: $bg-color
+
+  nav
+    width: 100%
+    display: flex
+    justify-content: space-between
+
+.title
+  margin: $unit-size-x6

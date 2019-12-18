@@ -14,21 +14,54 @@ const loader = (name) => {
 
 const jsLoader = { test: /\.(?:jsx|js)$/, ...loader('babel') }
 const htmlLoader = { test: /\.html$/, ...loader('html') }
+
+const cssExtract = {
+  loader: MiniCssExtractPlugin.loader,
+  options: { hmr: false }
+}
+
 const cssLoader = {
   test: /\.css$/,
-  use: [{
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-      hmr: false
-    }},
+  use: [
+    cssExtract,
     'css-loader'
+  ],
+  exclude: [/node_modules/]
+}
+
+const vendorCssLoader = {
+  test: /\.css$/,
+  use: [
+    cssExtract,
+    'css-loader'
+  ],
+  include: [/node_modules\/normalize.css/]
+}
+
+const sssLoader = {
+  test: /\.sss$/,
+  use: [
+    cssExtract,
+    { loader: 'css-loader',
+      options: {
+        modules: {
+          localIdentName: '[local]___[hash:base64:5]'
+        },
+        importLoaders: 1,
+        sourceMap: true,
+        onlyLocals: false
+      }
+    },
+    'postcss-loader'
   ]
 }
 
 const loaders = [
   jsLoader,
   htmlLoader,
-  cssLoader
+  cssLoader,
+  vendorCssLoader,
+  sssLoader
 ]
 
 const plugins = [
@@ -41,7 +74,7 @@ const plugins = [
     // chunkFilename: '[id].css',
     // ignoreOrder: false, // Enable to remov
   }),
-  new CopyPlugin([{ from: 'node_modules/sql.js/dist/sql-wasm.wasm', to: './'}]),
+  new CopyPlugin([{ from: 'node_modules/sql.js/dist/sql-wasm.wasm', to: './' }]),
 ]
 
 module.exports = {

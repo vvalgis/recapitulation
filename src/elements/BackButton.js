@@ -5,7 +5,7 @@ const BackButton = () => {
   return (
     <Switch to="">
       <Button name="back" title="Back">
-        <Icon name="left" />
+        <Icon name="back" />
       </Button>
     </Switch>
   )

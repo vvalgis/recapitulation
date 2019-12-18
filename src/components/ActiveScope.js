@@ -5,10 +5,6 @@ import { SyncButton, SettingsButton, ScopeTitle } from 'elements'
 const ActiveScope = ({ scope, tasks }) => {
   return (
     <Fragment>
-      <nav>
-        <SyncButton />
-        <SettingsButton />
-      </nav>
       <ScopeTitle scope={ scope } isActive />
       <Tasks tasks={ tasks } />
       <footer><NewTaskForm scope={ scope } /></footer>
