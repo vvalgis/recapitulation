@@ -1,6 +1,5 @@
 export InitDbScreen from './InitDbScreen'
 export InitScopeScreen from './InitScopeScreen'
-export LoadingScreen from './loading'
 export Recapitulation from './Recapitulation'
-export ScopeScreen from './ScopeScreen'
+export ScopeScreen from './scope'
 export SettingsScreen from './settings'

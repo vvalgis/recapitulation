@@ -1,14 +1,15 @@
+import css from './../style.sss'
 import React, { Fragment } from 'react'
-import { Tasks } from 'components'
-import { SettingsButton, ScopeTitle } from 'elements'
+import { Tasks } from './'
+import { ScopeTitle } from 'elements'
 
 const ArchiveScope = ({ scope, tasks }) => {
   return (
-    <Fragment>
+    <section className={ css.scope }>
       <ScopeTitle scope={ scope } />
       <Tasks tasks={ tasks } isArchivedScope />
       <footer></footer>
-    </Fragment>
+    </section>
   )
 }
 

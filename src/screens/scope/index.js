@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash'
 import CN from 'classnames'
 import { isScopesEqual } from 'libs/utils'
 import { getFromCompartment } from 'libs/store'
-import { Scope, ActiveScope, ArchiveScope } from 'components'
+import { Scope, ActiveScope, ArchiveScope } from './components'
 import { CommonScreenLayout } from 'layouts'
 
 import { InitScopeScreen, SettingsScreen } from 'screens'

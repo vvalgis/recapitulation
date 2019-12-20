@@ -1,5 +1,6 @@
 import css from './style.sss'
 import React from 'react'
+import { isEmpty } from 'lodash'
 import ScreenTitle from './ScreenTitle'
 import { SyncButton, SettingsButton, BackButton } from 'elements'
 
@@ -13,6 +14,8 @@ const renderButton = (AButton, idx) => <AButton key={ idx } />
 
 const renderButtons = (buttonNames) => buttonNames.map((name, idx) => renderButton(navButtons[name], idx))
 
+const renderTitle = (screenTitle) => isEmpty(screenTitle) ? null : <ScreenTitle>{ screenTitle }</ScreenTitle>
+
 const CommonScreenLayout = ({ screenTitle, leftNav, rightNav, children }) => {
   return (
     <section className={ css.screen }>
@@ -20,7 +23,7 @@ const CommonScreenLayout = ({ screenTitle, leftNav, rightNav, children }) => {
         { renderButtons(leftNav) }
         { renderButtons(rightNav) }
       </nav>
-      <ScreenTitle>{ screenTitle }</ScreenTitle>
+      { renderTitle(screenTitle) }
       { children }
     </section>
   )

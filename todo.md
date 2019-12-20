@@ -25,11 +25,14 @@
 * Refactor "main" and move it to libs
 
 * Add postcss and SugarSS
----
 * Move styles close to components
+* Fix animations
+---
+* Add cancel button on adding and editing forms
 * Add save icon to setting page
 * Add save icon to edit form
 * Hide save button if field wasn't changed on settings page
+* Empty task shouldn't be saved
 
 * welcome page with description and requirements
 

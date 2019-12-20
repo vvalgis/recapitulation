@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as actions from 'actions'
-import { TaskForm } from 'components'
+import { TaskForm } from './'
 import { Button, Icon } from 'elements'
 
 const NewTaskForm = ({ scope, onSubmit }) => {

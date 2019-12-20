@@ -1,14 +1,15 @@
+import css from './../style.sss'
 import React, { Fragment } from 'react'
-import { Tasks, NewTaskForm } from 'components'
-import { SyncButton, SettingsButton, ScopeTitle } from 'elements'
+import { Tasks, NewTaskForm } from './'
+import { ScopeTitle } from 'elements'
 
 const ActiveScope = ({ scope, tasks }) => {
   return (
-    <Fragment>
+    <section className={ css.scope }>
       <ScopeTitle scope={ scope } isActive />
       <Tasks tasks={ tasks } />
       <footer><NewTaskForm scope={ scope } /></footer>
-    </Fragment>
+    </section>
   )
 }
 
