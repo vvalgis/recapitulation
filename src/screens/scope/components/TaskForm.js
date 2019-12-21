@@ -1,25 +1,32 @@
 import React, { Fragment, useState } from 'react'
 import { Button, Icon } from 'elements'
 
-const TaskForm = ({ task = { note: '' }, onSubmit }) => {
+const TaskForm = ({ task = { note: '' }, onSubmit, onCancel }) => {
   const [note, setNote] = useState(task.note)
   const noteHandler = (event) => {
     setNote(event.target.value)
   }
-  const handleEnter = ({ key }) => {
+  const handleKeyDown = ({ key }) => {
     if (key === 'Enter') {
       handleSubmit()
     }
+    if (key === 'Escape') {
+      handleCancel()
+    }
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = (_event) => {
     setNote('')
     onSubmit(note)
+  }
+  const handleCancel = (_event) => {
+    onCancel()
   }
 
   return (
     <Fragment>
-      <input value={ note } onChange={ noteHandler } onKeyDown={ handleEnter } />
-      <Button name="add" onClick={ handleSubmit }><Icon name="add" /></Button>
+      <Button name="cancel" onClick={ handleCancel }><Icon name="restore" /></Button>
+      <input autoFocus value={ note } onChange={ noteHandler } onKeyDown={ handleKeyDown } />
+      <Button name="save" onClick={ handleSubmit }><Icon name="save" /></Button>
     </Fragment>
   )
 }

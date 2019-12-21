@@ -7,10 +7,12 @@ const ScopeTitle = ({ scope, isActive = false }) => {
 
   return (
     <header>
-      <ScopeNavigateButton scope={ scope } direction="backward" />
+      <span><ScopeNavigateButton scope={ scope } direction="backward" /></span>
       <h1>{ formattedDate }</h1>
-      <ScopeNavigateButton scope={ scope } direction="forward" />
-      { isActive ? <RecapitulateButton /> : '' }
+      <span>
+        <ScopeNavigateButton scope={ scope } direction="forward" />
+        { isActive ? <RecapitulateButton /> : '' }
+      </span>
     </header>
   )
 }

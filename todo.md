@@ -27,25 +27,29 @@
 * Add postcss and SugarSS
 * Move styles close to components
 * Fix animations
----
-* Add cancel button on adding and editing forms
 * Add save icon to setting page
 * Add save icon to edit form
 * Hide save button if field wasn't changed on settings page
+* Split files onto screens 
+* animations
+* Add responsive style
+* Add cancel button on adding and editing forms
 * Empty task shouldn't be saved
+* Justify title on archived scope screen 
+* [Bug] On saving setting it doesn't rerender with a new value and as a result it always cancel to the first value even if it was changed alreay.
+---
+
 
 * welcome page with description and requirements
 
 * Before publishing remove change API token
 * Release (Tag)
 
-* Split files onto screens 
-* animations
-
-* Add responsive style
 
 * Add linter
 * add CI
 * add tests
+
+* Navigation through scope's title, on click show calendar with dates linked to scopes.
 
 

@@ -1,7 +1,6 @@
 import css from './../style.sss'
 import React, { Fragment } from 'react'
-import { Tasks } from './'
-import { ScopeTitle } from 'elements'
+import { Tasks, ScopeTitle } from './'
 
 const ArchiveScope = ({ scope, tasks }) => {
   return (

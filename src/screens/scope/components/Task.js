@@ -36,8 +36,8 @@ const renderTask = (task, { leftAside, rightAside }, className) => {
   )
 }
 
-const renderForm = (task, submitNewNote) =>  {
-  return <li><TaskForm { ...{ task, onSubmit: submitNewNote } } /></li>
+const renderForm = (task, submitNewNote, cancelEditing) =>  {
+  return <li><TaskForm { ...{ task, onSubmit: submitNewNote, onCancel: cancelEditing } } /></li>
 }
 
 const Task = ({ task, statusNames }) => {
@@ -47,11 +47,14 @@ const Task = ({ task, statusNames }) => {
     setEditing(false)
     dispatch(actions.task.updateNote({ task, note }))
   }
+  const cancelEditing = () => {
+    setEditing(false)
+  }
   const buttons = useMemo(prepareButtons(editing, setEditing), [editing])
   const statuses = useMemo(prepareStatuses(buttons), [])
   const taskStatus = statuses[task.status]
 
-  return editing ? renderForm(task, submitNewNote) : renderTask(task, taskStatus, statusNames[task.status])
+  return editing ? renderForm(task, submitNewNote, cancelEditing) : renderTask(task, taskStatus, statusNames[task.status])
 }
 
 export default Task

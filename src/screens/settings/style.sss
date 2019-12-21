@@ -21,14 +21,30 @@
     flex-flow: row nowrap
     flex: 1 1 70%
 
-  dd input
-    margin-left: 0
-    width: 100%
-    margin-left: 3.25rem
-    border: none
-    background-color: rgba(237, 174, 73, 1)
-    color: rgba(97, 33, 15, 1)
-    outline: none
-    font: inherit
-    padding: 0 0.5rem
-    align-self: stretch
+    input
+      margin-left: 0
+      width: 100%
+      height: $unit-size-x6
+      border: none
+      background-color: rgba(237, 174, 73, 1)
+      color: rgba(97, 33, 15, 1)
+      outline: none
+      font: inherit
+      padding: 0 0.5rem
+      align-self: stretch
+      flex: 1
+
+    button
+      width: $unit-size-x6
+      overflow: hidden
+      text-indent: -300%
+      animation: draw-slide 100ms ease-out 50ms forwards 1
+
+      i
+        width: $unit-size-x4
+        height: $unit-size-x4
+
+
+@keyframes draw-slide
+  to
+    text-indent: 0

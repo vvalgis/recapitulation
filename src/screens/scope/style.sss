@@ -1,4 +1,5 @@
 @import 'palette.sss'
+@import 'main.sss'
 
 .scope
   display: flex
@@ -12,6 +13,9 @@
     justify-content: space-between
     align-items: center
     padding-bottom: 0.750rem
+
+    span
+      width: $unit-size-x6
 
     h1
       font-size: inherit
@@ -30,7 +34,6 @@
   footer input,
   li input
     width: 100%
-    margin-left: 3.25rem
     border: none
     background-color: $accent1-color
     color: $primary-color
@@ -38,7 +41,6 @@
     font: inherit
     padding: 0 0.5rem
     align-self: stretch
-
 
 .tasks
   list-style-type: none

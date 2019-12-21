@@ -20,8 +20,8 @@ const CommonScreenLayout = ({ screenTitle, leftNav, rightNav, children }) => {
   return (
     <section className={ css.screen }>
       <nav>
-        { renderButtons(leftNav) }
-        { renderButtons(rightNav) }
+        <span>{ renderButtons(leftNav) }</span>
+        <span>{ renderButtons(rightNav) }</span>
       </nav>
       { renderTitle(screenTitle) }
       { children }
