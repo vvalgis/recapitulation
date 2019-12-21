@@ -3,7 +3,7 @@ import { scope as opScope } from 'operations'
 import signals from 'libs/signals'
 
 const init = () => (dispatch, getState) => {
-  dispatch(actions.scope.switchTo(opScope.create(getState().db)))
+  dispatch(switchTo(opScope.create(getState().db)))
 }
 
 const setActive = (currentScope) => (dispatch, getState) => {

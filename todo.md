@@ -37,19 +37,22 @@
 * Empty task shouldn't be saved
 * Justify title on archived scope screen 
 * [Bug] On saving setting it doesn't rerender with a new value and as a result it always cancel to the first value even if it was changed alreay.
----
-
-
-* welcome page with description and requirements
-
 * Before publishing remove change API token
 * Release (Tag)
+---
+
+* Figure out with Dropbox application creating
+* welcome page with description and requirements
 
 
 * Add linter
 * add CI
 * add tests
 
+
+Future features
 * Navigation through scope's title, on click show calendar with dates linked to scopes.
+* Notifications about actions made, like syncronizing, etc.
+* Recurring tasks
 
 

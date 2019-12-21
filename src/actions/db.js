@@ -17,10 +17,13 @@ const loadFile = () => (dispatch) => {
     })
   }
   const onError = (response) => {
-    dispatch(signals.errorReceived(response))
-    opDb.init([]).then((db) => {
-      // dispatch(syncFile(db))
-    })
+    switch (response.status) {
+      case 409:
+        opDb.init([]).then((db) => dispatch(syncFile(db)))
+        break
+      default:
+        dispatch(signals.errorReceived(response))
+    }
   }
   // const content = localStorage.getItem('dbFileContent') /* get db from cache */
   const content = null

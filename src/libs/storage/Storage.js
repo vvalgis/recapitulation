@@ -73,7 +73,7 @@ const findBy = (exec, schema) => (fieldName, fieldValue, { sign = '=', all = fal
   const result = queryFn.call(null, exec, query)
 
   if (isEmpty(result)) {
-    console.error(`Not found ${ fieldName } ${sign} "${ fieldValue }" in "${ schema.tableName }"`)
+    // console.error(`Not found ${ fieldName } ${sign} "${ fieldValue }" in "${ schema.tableName }"`)
     return all ? [] : {}
   } else {
     return all ? result.map(wrapResult) : wrapResult(result)

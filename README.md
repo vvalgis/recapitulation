@@ -5,9 +5,9 @@
 ### Visual Axis
 
 * Screens - The whole screen to route between (could be a modal popup)
-* Layout - Composite of component to present some part of an interface visually
-* Components - Composite of Element to provide some UX
-* Elements - Simple brick of an interface (ex: button, input, icon)
+* Layout - A composite of components to present some part of an interface visually
+* Components - A composite of Elements to provide some UX
+* Elements - A simple brick of an interface (ex: button, input, icon)
 
 ### Logic Axis
 
@@ -18,21 +18,24 @@
 
 ```
 src/
-  index.js
   zero.html
   app.js
   screens/
+    some-simple-screen.js
     some-screen/
       index.js
-      actions.js
-      reducers.js
-      operations.js
+      styles.sss
+      components/
     ...
   layouts/
   components/
+  operations/
   elements/
-  common/
-    actions.js
-    reducers.js
-    operations.js
+  libs/
+    common-css/
+    common-hooks/
+    router/
+    config/
+    signals.js
+    store.js
 ```
