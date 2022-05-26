@@ -1,0 +1,22 @@
+name: Setup environment variables
+inputs:
+  ssh-key-path:
+    required: true
+    type: string
+  remote-user:
+    required: true
+    type: string
+  remote-host:
+    required: true
+    type: string
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run make command remotely
+      id: make-run
+      run: |
+        echo "SSH_KEY_PATH='${{ inputs.ssh-key-path }}'" >> $GITHUB_ENV
+        echo "REMOTE_HOST='${{ inputs.remote-host }}'" >> $GITHUB_ENV
+        echo "REMOTE_USER='${{ inputs.remote-user }}'" >> $GITHUB_ENV
+      shell: bash

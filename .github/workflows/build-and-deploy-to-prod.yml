@@ -1,0 +1,83 @@
+name: Build and Deploy the Prod
+on:
+  push:
+    branches:
+      - production
+jobs:
+  build:
+    environment: production
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+
+    - name: Build
+      run: make build-release
+
+    - name: Store
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-files
+        path: dist
+
+  deploy:
+    environment: production
+    runs-on: ubuntu-latest
+
+    needs: [build]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        id: ssh
+        uses: ./.github/actions/setup-ssh-key
+        with:
+          private-key: ${{ secrets.PRODUCTION_SSH_KEY_CONTENT }}
+          known-hosts: ${{ secrets.KNOWN_HOSTS_CONTENT }}
+
+      - name: Setup environment variables
+        uses: ./.github/actions/setup-env
+        with:
+          ssh-key-path: ${{ steps.ssh.outputs.private-key-path }}
+          remote-user: ${{ secrets.PRODUCTION_USER }}
+          remote-host: ${{ secrets.PRODUCTION_HOST }}
+
+      # - name: Start SSH via Ngrok
+      #   run: curl -sL https://gist.githubusercontent.com/retyui/7115bb6acf151351a143ec8f96a7c561/raw/7099b9db76729dc5761da72aa8525f632d8875c9/debug-github-actions.sh | bash
+      #   env:
+      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+      #     USER_PASS: ${{ secrets.NGROK_PASS }}
+
+      - name: Prepare remote target
+        id: prepare
+        uses: ./.github/actions/remote-make
+        with:
+          target: new-release
+
+      - name: Retrive built files
+        uses: actions/download-artifact@v3
+        with:
+          name: build-files
+          path: dist
+
+      - name: Deploy
+        run: scp -r -i ${{ env.SSH_KEY_PATH }} dist/* ${{ env.REMOTE_USER }}@${{ env.REMOTE_HOST }}:recap/releases/${{ steps.prepare.outputs.result }}
+        shell: bash
+
+      # - name: Don't kill instace
+      #   if: ${{ failure() }}
+      #   run: sleep 1h # Prevent to killing instance after failure
+
+      - name: Switch current
+        uses: ./.github/actions/remote-make
+        with:
+          target: release
+
+      - name: Cleanup old
+        uses: ./.github/actions/remote-make
+        with:
+          target: clean-old

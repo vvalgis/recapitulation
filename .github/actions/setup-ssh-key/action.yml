@@ -1,0 +1,29 @@
+# All glory to Boberneprotiv/setup-ssh-key
+name: 'Setup SSH key'
+inputs:
+  private-key:
+    description: 'Private key required to access the host'
+    required: true
+  known-hosts:
+    description: 'Hostname or IP to add to the known hosts file'
+    required: true
+
+outputs:
+  private-key-path:
+    description: 'path to private key'
+    value: ${{ steps.setup-output.outputs.private-key-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create SSH key
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ inputs.private-key }}" > ~/.ssh/id_rsa
+        sudo chmod 600 ~/.ssh/id_rsa
+        echo "${{ inputs.known-hosts }}" > ~/.ssh/known_hosts
+      shell: bash
+    - name: Setup output
+      id: setup-output
+      run: echo "::set-output name=private-key-path::~/.ssh/id_rsa"
+      shell: bash
