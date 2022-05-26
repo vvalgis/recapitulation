@@ -1,0 +1,53 @@
+name: Build and Deploy the Prod
+on:
+  push:
+    branches:
+      - production
+jobs:
+  build:
+    environment: production
+    runs_on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+
+    - name: Build
+      run: make build-release
+
+    - name: Store
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-files
+        path: dist
+
+  deploy:
+    environment: production
+    runs_on: ubuntu-latest
+
+    needs: [build]
+
+    steps:
+      - name: Prepare
+        id: prepare
+        uses: ./.github/workflows/remote-make.yml
+        with:
+          target: new-release
+
+      - name: Retrive
+        uses: actions/download-artifact@v3
+        with:
+          name: build-files
+      - name: Deploy
+        run: scp -r -i ${{ secrets.PRODUCTION_SSH_KEY }} ./dist ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }}:releases/${{ steps.prepare.outputs.result }}
+      - name: Switch current
+        uses: ./.github/workflows/remote-make.yml
+        with:
+          target: release
+
+      - name: Cleanup old
+        uses: ./.github/workflows/remote-make.yml
+          with:
+            target: clean-old

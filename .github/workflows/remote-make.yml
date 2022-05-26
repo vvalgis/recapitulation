@@ -1,0 +1,15 @@
+name: Run remote make command
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+
+jobs:
+  remote-make:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run make command remotely
+        run: ::set-output name=result::ssh -i ${{ secrets.PRODUCTION_SSH_KEY }} -l ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} cd recap && make ${{ inputs.target }}
